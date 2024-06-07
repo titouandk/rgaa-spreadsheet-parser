@@ -28,5 +28,8 @@
   "bugs": {
     "url": "https://github.com/titouandk/rgaa-spreadsheet-parser/issues"
   },
-  "homepage": "https://github.com/titouandk/rgaa-spreadsheet-parser#readme"
+  "homepage": "https://github.com/titouandk/rgaa-spreadsheet-parser#readme",
+  "dependencies": {
+    "xlsx": "file:vendor/xlsx-0.20.2.tgz"
+  }
 }
