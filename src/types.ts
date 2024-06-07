@@ -1,4 +1,12 @@
 /**
+ * Represents a parser that extracts audit data from a source.
+ */
+export abstract class Parser {
+	abstract getPages(): Promise<Page[]>;
+	abstract getCriteria(): Promise<Criterion[]>;
+}
+
+/**
  * Represents metadata of an audited page.
  */
 export interface Page {
