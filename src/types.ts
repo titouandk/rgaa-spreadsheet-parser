@@ -23,7 +23,7 @@ export interface Criterion {
 	topicId: number;
 	id: number;
 	status: "NT" | "C" | "NC" | "NA";
-	statusExplanation: string;
+	correctionInstructions: string;
 	derogation: "N" | "D";
 	derogationReason: string;
 }
