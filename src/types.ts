@@ -1,14 +1,15 @@
 /**
- * Represents a parser that extracts audit data from a source.
+ * Metadata of an audit.
  */
-export abstract class Parser {
-	abstract getPages(): Promise<Page[]>;
-	abstract getCriteria(): Promise<Criterion[]>;
-	abstract getInfo(): Promise<Info>;
+export interface Metadata {
+	auditor: string;
+	date: string;
+	context: string;
+	website: string;
 }
 
 /**
- * Metadata of a page.
+ * Metadata of an audited page.
  */
 export interface Page {
 	id: string;
@@ -17,7 +18,7 @@ export interface Page {
 }
 
 /**
- * Audit result of a criterion.
+ * The result of a criterion evaluation.
  */
 export interface Criterion {
 	pageId: string;
@@ -27,14 +28,4 @@ export interface Criterion {
 	correctionInstructions: string;
 	derogation: "N" | "D";
 	derogationComment: string;
-}
-
-/**
- * Metadata of an audit.
- */
-export interface Info {
-	auditor: string;
-	date: string;
-	context: string;
-	website: string;
 }
