@@ -6,6 +6,7 @@ export interface Metadata {
 	date: string;
 	context: string;
 	website: string;
+	rgaaVersion: string;
 }
 
 /**
