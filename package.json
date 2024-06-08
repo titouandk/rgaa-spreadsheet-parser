@@ -12,6 +12,7 @@
   },
   "scripts": {
     "build": "npx tsc",
+    "format": "npx @biomejs/biome check",
     "test": "jest"
   },
   "repository": {
