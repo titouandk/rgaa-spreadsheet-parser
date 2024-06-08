@@ -25,7 +25,7 @@ export interface Criterion {
 	status: "NT" | "C" | "NC" | "NA";
 	correctionInstructions: string;
 	derogation: "N" | "D";
-	derogationReason: string;
+	derogationComment: string;
 }
 
 /**
