@@ -11,7 +11,7 @@
     "typescript": "^5.4.5"
   },
   "scripts": {
-    "build": "npx tsc",
+    "build": "npm run format && npm run test && npx tsc",
     "format": "npx @biomejs/biome check",
     "test": "jest"
   },
