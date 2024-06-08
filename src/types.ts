@@ -4,6 +4,7 @@
 export abstract class Parser {
 	abstract getPages(): Promise<Page[]>;
 	abstract getCriteria(): Promise<Criterion[]>;
+	abstract getInfo(): Promise<Info>;
 }
 
 /**
@@ -31,7 +32,7 @@ export interface Criterion {
 /**
  * Metadata of an audit.
  */
-export interface Audit {
+export interface Info {
 	auditor: string;
 	date: string;
 	context: string;
