@@ -7,7 +7,7 @@ export abstract class Parser {
 }
 
 /**
- * Represents metadata of an audited page.
+ * Metadata of a page.
  */
 export interface Page {
 	id: string;
@@ -16,7 +16,7 @@ export interface Page {
 }
 
 /**
- * Represents the audit result of a criterion.
+ * Audit result of a criterion.
  */
 export interface Criterion {
 	pageId: string;
@@ -29,7 +29,7 @@ export interface Criterion {
 }
 
 /**
- * Represents metadata of an audit.
+ * Metadata of an audit.
  */
 export interface Audit {
 	auditor: string;
