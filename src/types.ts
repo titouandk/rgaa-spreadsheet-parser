@@ -27,3 +27,13 @@ export interface Criterion {
 	derogation: "N" | "D";
 	derogationReason: string;
 }
+
+/**
+ * Represents metadata of an audit.
+ */
+export interface Audit {
+	auditor: string;
+	date: string;
+	context: string;
+	website: string;
+}
