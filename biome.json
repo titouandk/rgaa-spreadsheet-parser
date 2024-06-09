@@ -15,7 +15,8 @@
 			"dist",
 			"vendor",
 			"package.json",
-			"package-lock.json"
+			"package-lock.json",
+			"__tests__/**/*.js"
 		]
 	}
 }
