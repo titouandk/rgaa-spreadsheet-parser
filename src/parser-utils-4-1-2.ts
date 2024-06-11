@@ -5,7 +5,7 @@
  */
 
 import * as xlsx from "xlsx";
-import type { Page } from "./types";
+import type { Criterion, Page } from "./types";
 
 /**
  * A function that extracts the list of pages that were part of the "Sample" sheet.
@@ -32,4 +32,96 @@ export function getPages(workbook: xlsx.WorkBook): Page[] {
 	});
 
 	return validPages;
+}
+
+type Row = {
+	topicTitle: string;
+	criterionId: string;
+	criterionTitle: string;
+	status: string;
+	correctionInstructions: string;
+	derogation: string;
+	derogationComment: string;
+};
+
+export function getCriteria(workbook: xlsx.WorkBook): Criterion[] {
+	const pagesToAudit = getPages(workbook);
+	const criteria: Criterion[] = [];
+
+	for (const page of pagesToAudit) {
+		const sheet = workbook.Sheets[page.id];
+
+		if (!sheet) {
+			continue;
+		}
+
+		// convert the sheet to json
+		let rows = xlsx.utils.sheet_to_json<Row>(sheet, {
+			header: [
+				"topicTitle",
+				"criterionId",
+				"criterionTitle",
+				"status",
+				"derogation",
+				"correctionInstructions",
+				"derogationComment",
+			],
+			defval: "",
+		});
+
+		// remove the header rows of the page
+		rows = rows.slice(3);
+
+		// for each row, convert it to a Row object and add it to the rows array
+		for (const row of rows) {
+			const topicId = Number.parseInt(row.criterionId.split(".")[0]);
+			if (Number.isNaN(topicId)) {
+				throw new Error(
+					`Invalid topic id "${topicId}" for row ${JSON.stringify(row)}`,
+				);
+			}
+
+			const criterionId = Number.parseInt(row.criterionId.split(".")[1]);
+			if (Number.isNaN(criterionId)) {
+				throw new Error(
+					`Invalid criterion id "${criterionId}" for row ${JSON.stringify(
+						row,
+					)}`,
+				);
+			}
+
+			const criterionStatus = row.status.toUpperCase();
+			if (
+				criterionStatus !== "NT" &&
+				criterionStatus !== "C" &&
+				criterionStatus !== "NC" &&
+				criterionStatus !== "NA"
+			) {
+				throw new Error(
+					`Invalid status "${criterionStatus}" for row ${JSON.stringify(row)}`,
+				);
+			}
+
+			const criterionDerogation = row.derogation.toUpperCase();
+			if (criterionDerogation !== "N" && criterionDerogation !== "D") {
+				throw new Error(
+					`Invalid derogation "${criterionDerogation}" for row ${JSON.stringify(
+						row,
+					)}`,
+				);
+			}
+
+			criteria.push({
+				pageId: page.id,
+				topicId: topicId,
+				id: criterionId,
+				status: criterionStatus,
+				correctionInstructions: row.correctionInstructions,
+				derogation: criterionDerogation,
+				derogationComment: row.derogationComment,
+			});
+		}
+	}
+
+	return criteria;
 }
