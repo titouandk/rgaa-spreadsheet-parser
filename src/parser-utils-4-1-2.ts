@@ -5,7 +5,7 @@
  */
 
 import * as xlsx from "xlsx";
-import type { Criterion, Page } from "./types";
+import type { Criterion, Metadata, Page } from "./types";
 
 /**
  * A function that extracts the list of pages that were part of the "Sample" sheet.
@@ -124,4 +124,42 @@ export function getCriteria(workbook: xlsx.WorkBook): Criterion[] {
 	}
 
 	return criteria;
+}
+
+export function getMetadata(workbook: xlsx.WorkBook): Metadata {
+	const metadataSheet = workbook.Sheets.Échantillon;
+
+	if (!metadataSheet) {
+		throw new Error("Missing Échantillon sheet in the workbook");
+	}
+
+	const rawData = xlsx.utils.sheet_to_json<{ key: string; value: string }>(
+		metadataSheet,
+		{
+			header: ["key", "value"],
+			defval: "",
+		},
+	);
+
+	// rgaa version is contained in the key instead of the value
+	const firstCellContent = rawData[0].key;
+	// regexp to extract the version number ("RGAA 4.1.1 – GRILLE D'ÉVALUATION")
+	const rgaaVersion = firstCellContent.match(/RGAA (\d+\.\d+\.\d+)/)?.[1] || "";
+
+	// date, auditor and context are contained in the key instead of the value
+	const date = rawData.slice(2)[0].key.split(":")[1].trim();
+	const auditor = rawData.slice(3)[0].key.split(":")[1].trim();
+	const context = rawData.slice(4)[0].key.split(":")[1].trim();
+
+	const website = rawData.slice(5)[0].value;
+
+	const metadata = {
+		rgaaVersion,
+		auditor,
+		date,
+		context,
+		website,
+	};
+
+	return metadata;
 }
