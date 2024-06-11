@@ -130,7 +130,7 @@ export function getMetadata(workbook: xlsx.WorkBook): Metadata {
 	const metadataSheet = workbook.Sheets.Échantillon;
 
 	if (!metadataSheet) {
-		throw new Error("Missing Échantillon sheet in the workbook");
+		throw new Error('Missing "Échantillon" sheet in the workbook');
 	}
 
 	const rawData = xlsx.utils.sheet_to_json<{ key: string; value: string }>(
