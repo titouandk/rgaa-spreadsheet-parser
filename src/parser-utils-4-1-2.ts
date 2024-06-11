@@ -13,7 +13,7 @@ import type { Page } from "./types";
  * @param workbook A workbook object representing the content of the spreadsheet.
  * @returns An array of Page that were extracted from the spreadsheet.
  */
-function getPages(workbook: xlsx.WorkBook): Page[] {
+export function getPages(workbook: xlsx.WorkBook): Page[] {
 	// get the "Échantillon" ("sample") sheet from the spreadsheet
 	const sampleSheet = workbook.Sheets.Échantillon;
 
