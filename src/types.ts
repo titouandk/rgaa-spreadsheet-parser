@@ -15,6 +15,9 @@ export interface Metadata {
 	date: string;
 	context: string;
 	website: string;
+	// RGAA version is currently provided by the user. The extraction
+	// is useless for now, but it could be useful in the futur, when
+	// the parser will be able to auto-determine the version.
 	rgaaVersion: string;
 }
 
