@@ -50,6 +50,12 @@ type Row = {
 	derogationComment: string;
 };
 
+/**
+ * Returns all criteria of all pages from the spreadsheet.
+ * @param workbook A workbook object representing the content of the spreadsheet.
+ * @returns The array of Criterion extracted from the spreadsheet.
+ * @throws {Error} If the sheet for a page is missing in the workbook.
+ */
 export function getCriteria(workbook: xlsx.WorkBook): Criterion[] {
 	const pagesToAudit = getPages(workbook);
 	const criteria: Criterion[] = [];
