@@ -43,3 +43,39 @@ describe("getMetadata", () => {
 		});
 	});
 });
+
+describe("getPages", () => {
+	test("should return only the pages that have an id, and either a title or a URL", () => {
+		const workbook = xlsx.readFile("test-data/rgaa-4-1-2/04-pages.ods");
+		const pages = getPages(workbook);
+
+		expect(pages).toEqual([
+			{
+				id: "P01",
+				title: "Accueil",
+				url: "http://www.site.fr/accueil.html",
+			},
+			// Page 2 has no title nor URL, it should not be included
+			{
+				id: "P03",
+				title: "Contact",
+				url: "",
+			},
+			{
+				id: "P04",
+				title: "",
+				url: "http://www.site.fr/authentification.html",
+			},
+			{
+				id: "P05",
+				title: "Multiline title",
+				url: "",
+			},
+			{
+				id: "P06",
+				title: "",
+				url: "http://www.site.fr/multiline-url.html",
+			},
+		]);
+	});
+});
