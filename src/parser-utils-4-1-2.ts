@@ -64,7 +64,7 @@ export function getCriteria(workbook: xlsx.WorkBook): Criterion[] {
 		const sheet = workbook.Sheets[page.id];
 
 		if (!sheet) {
-			continue;
+			throw new Error(`Missing sheet for page "${page.id}" in the spreadsheet`);
 		}
 
 		// convert the sheet to json
