@@ -132,6 +132,14 @@ export function getCriteria(workbook: xlsx.WorkBook): Criterion[] {
 	return criteria;
 }
 
+/**
+ * This function extracts the metadata from the "Échantillon" sheet of the workbook.
+ * The metadata contains the RGAA version of the spreadsheet, the auditor, the audit date,
+ * the context of the audit, and the audited website.
+ * @param workbook A workbook object representing a RGAA 4.1.2 spreadsheet.
+ * @returns Metadata extracted from the workbook.
+ * @throws {Error} If the workbook does not contain the "Échantillon" sheet.
+ */
 export function getMetadata(workbook: xlsx.WorkBook): Metadata {
 	const metadataSheet = workbook.Sheets.Échantillon;
 
