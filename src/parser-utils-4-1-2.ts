@@ -23,8 +23,14 @@ export function getPages(workbook: xlsx.WorkBook): Page[] {
 		defval: "",
 	});
 
-	// remove the header rows of the page
-	const allPages = rawContent.slice(7);
+	// remove the header rows of the sheet, and trim the values
+	const allPages = rawContent.slice(7).map((page) => {
+		return {
+			id: page.id.trim(),
+			title: page.title.trim(),
+			url: page.url.trim(),
+		};
+	});
 
 	// keep the pages that have an id, and either a title or a url
 	const validPages = allPages.filter((page) => {
