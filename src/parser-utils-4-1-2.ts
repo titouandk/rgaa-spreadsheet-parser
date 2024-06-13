@@ -137,11 +137,14 @@ export function getMetadata(workbook: xlsx.WorkBook): Metadata {
 	const rgaaVersion =
 		metadataSheet.A1?.v?.match(/RGAA (\d+\.\d+\.\d+)/)?.[1] || "";
 
-	// date, auditor and context are contained in the same cell, separated by a colon
+	// date, auditor and context have the key and the value contained in the same cell,
+	// separated by a colon
 	const date = metadataSheet.A3?.v?.split(":")[1]?.trim() || "";
 	const auditor = metadataSheet.A4?.v?.split(":")[1]?.trim() || "";
 	const context = metadataSheet.A5?.v?.split(":")[1]?.trim() || "";
 
+	// website has the key and the value contained in 2 different cells
+	// no need to split the value, as it is already in the B6 cell.
 	const website = metadataSheet.B6?.v || "";
 
 	const metadata = {
