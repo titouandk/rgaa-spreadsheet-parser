@@ -135,4 +135,36 @@ describe("getCriteria", () => {
 		expect(criteria[nbCriteriaPerPage - 1]?.topicId).toEqual(13);
 		expect(criteria[nbCriteriaPerPage - 1]?.id).toEqual(12);
 	});
+
+	test("should return all criteria from a spreadsheet", () => {
+		const workbook = xlsx.readFile("test-data/rgaa-4-1-2/80-page-sheets.ods");
+
+		const criteria = getCriteria(workbook);
+
+		expect(criteria.length).toEqual(20 * nbCriteriaPerPage);
+
+		expect(criteria[0]).toEqual({
+			pageId: "P01",
+			topicId: 1,
+			id: 1,
+			status: "C",
+			correctionInstructions:
+				"P01, topic 1, criterion 1, correction instructions, line 1.\n\nP01, topic 1, criterion 1, correction instructions, line 3.",
+			derogation: "N",
+			derogationComment:
+				"P01, topic 1, criterion 1, derogation comment, line 1.\n\nP01, topic 1, criterion 1, derogation comment, line 3.",
+		});
+
+		expect(criteria[nbCriteriaPerPage - 1]).toEqual({
+			pageId: "P01",
+			topicId: 13,
+			id: 12,
+			status: "NT",
+			correctionInstructions:
+				"P01, topic 13, criterion 12, correction instructions, line 1.\n\nP01, topic 13, criterion 12, correction instructions, line 3.",
+			derogation: "N",
+			derogationComment:
+				"P01, topic 13, criterion 12, derogation comment, line 1.\n\nP01, topic 13, criterion 12, derogation comment, line 3.",
+		});
+	});
 });
