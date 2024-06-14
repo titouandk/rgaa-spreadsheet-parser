@@ -7,7 +7,7 @@ const nbCriteriaPerPage = 106;
 describe("getMetadata", () => {
 	test('should throw an error if the workbook does not contain the "Échantillon" sheet', () => {
 		const workbook = xlsx.readFile(
-			"test-data/rgaa-4-1-2/01-missing-echantillon-sheet.ods",
+			"test-data/rgaa-4-1-2/10-echantillon-sheet-missing.ods",
 		);
 
 		expect(() => getMetadata(workbook)).toThrowError(
@@ -17,7 +17,7 @@ describe("getMetadata", () => {
 
 	test("should return empty strings for missing metadata", () => {
 		const workbook = xlsx.readFile(
-			"test-data/rgaa-4-1-2/02-missing-metadata.ods",
+			"test-data/rgaa-4-1-2/20-echantillon-sheet-missing-metadata.ods",
 		);
 		const metadata = getMetadata(workbook);
 
@@ -32,7 +32,7 @@ describe("getMetadata", () => {
 
 	test("should return the metadata from the workbook", () => {
 		const workbook = xlsx.readFile(
-			"test-data/rgaa-4-1-2/03-valid-metadata.ods",
+			"test-data/rgaa-4-1-2/30-echantillon-sheet-valid-metadata.ods",
 		);
 		const metadata = getMetadata(workbook);
 
@@ -48,7 +48,9 @@ describe("getMetadata", () => {
 
 describe("getPages", () => {
 	test('should not be sensitive to empty header rows in the "Échantillon" sheet', () => {
-		const workbook = xlsx.readFile("test-data/rgaa-4-1-2/tmp.ods");
+		const workbook = xlsx.readFile(
+			"test-data/rgaa-4-1-2/40-echantillon-sheet-empty-header-rows.ods",
+		);
 		const pages = getPages(workbook);
 
 		expect(pages).toEqual([
@@ -71,7 +73,9 @@ describe("getPages", () => {
 	});
 
 	test("should return only the pages that have an id, and either a title or a URL", () => {
-		const workbook = xlsx.readFile("test-data/rgaa-4-1-2/04-pages.ods");
+		const workbook = xlsx.readFile(
+			"test-data/rgaa-4-1-2/50-echantillon-sheet-page-list.ods",
+		);
 		const pages = getPages(workbook);
 
 		expect(pages).toEqual([
@@ -107,7 +111,9 @@ describe("getPages", () => {
 
 describe("getCriteria", () => {
 	test("should throw an error if a sheet is missing for a page", () => {
-		const workbook = xlsx.readFile("test-data/rgaa-4-1-2/05-missing-page.ods");
+		const workbook = xlsx.readFile(
+			"test-data/rgaa-4-1-2/60-page-sheet-missing.ods",
+		);
 
 		expect(() => getCriteria(workbook)).toThrowError(
 			'Missing sheet for page "P02" in the spreadsheet',
@@ -116,7 +122,7 @@ describe("getCriteria", () => {
 
 	test("should not be sensitive to empty header rows in a sheet", () => {
 		const workbook = xlsx.readFile(
-			"test-data/rgaa-4-1-2/06-missing-page-header.ods",
+			"test-data/rgaa-4-1-2/70-page-sheet-empty-header-rows.ods",
 		);
 
 		const criteria = getCriteria(workbook);
