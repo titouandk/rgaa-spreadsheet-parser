@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from "@jest/globals";
 import * as xlsx from "xlsx";
-import { getCriteria, getMetadata, getPages } from "../src/parser-utils-4-1-2";
+import { Parser_4_1_2 } from "../src/parser";
 
 const nbCriteriaPerPage = 106;
 
@@ -9,8 +9,9 @@ describe("getMetadata", () => {
 		const workbook = xlsx.readFile(
 			"test-data/rgaa-4-1-2/10-echantillon-sheet-missing.ods",
 		);
+		const parser = new Parser_4_1_2(workbook);
 
-		expect(() => getMetadata(workbook)).toThrowError(
+		expect(() => parser.getMetadata()).toThrowError(
 			'Missing "Échantillon" sheet in the workbook',
 		);
 	});
@@ -19,7 +20,8 @@ describe("getMetadata", () => {
 		const workbook = xlsx.readFile(
 			"test-data/rgaa-4-1-2/20-echantillon-sheet-missing-metadata.ods",
 		);
-		const metadata = getMetadata(workbook);
+		const parser = new Parser_4_1_2(workbook);
+		const metadata = parser.getMetadata();
 
 		expect(metadata).toEqual({
 			rgaaVersion: "",
@@ -34,7 +36,8 @@ describe("getMetadata", () => {
 		const workbook = xlsx.readFile(
 			"test-data/rgaa-4-1-2/30-echantillon-sheet-valid-metadata.ods",
 		);
-		const metadata = getMetadata(workbook);
+		const parser = new Parser_4_1_2(workbook);
+		const metadata = parser.getMetadata();
 
 		expect(metadata).toEqual({
 			rgaaVersion: "4.1.1" /* error in the official RGAA 4.1.2 spreadsheet */,
@@ -51,7 +54,8 @@ describe("getPages", () => {
 		const workbook = xlsx.readFile(
 			"test-data/rgaa-4-1-2/40-echantillon-sheet-empty-header-rows.ods",
 		);
-		const pages = getPages(workbook);
+		const parser = new Parser_4_1_2(workbook);
+		const pages = parser.getPages();
 
 		expect(pages).toEqual([
 			{
@@ -76,7 +80,8 @@ describe("getPages", () => {
 		const workbook = xlsx.readFile(
 			"test-data/rgaa-4-1-2/50-echantillon-sheet-page-list.ods",
 		);
-		const pages = getPages(workbook);
+		const parser = new Parser_4_1_2(workbook);
+		const pages = parser.getPages();
 
 		expect(pages).toEqual([
 			{
@@ -114,8 +119,9 @@ describe("getCriteria", () => {
 		const workbook = xlsx.readFile(
 			"test-data/rgaa-4-1-2/60-page-sheet-missing.ods",
 		);
+		const parser = new Parser_4_1_2(workbook);
 
-		expect(() => getCriteria(workbook)).toThrowError(
+		expect(() => parser.getCriteria()).toThrowError(
 			'Missing sheet for page "P02" in the spreadsheet',
 		);
 	});
@@ -124,8 +130,8 @@ describe("getCriteria", () => {
 		const workbook = xlsx.readFile(
 			"test-data/rgaa-4-1-2/70-page-sheet-empty-header-rows.ods",
 		);
-
-		const criteria = getCriteria(workbook);
+		const parser = new Parser_4_1_2(workbook);
+		const criteria = parser.getCriteria();
 
 		expect(criteria.length).toEqual(nbCriteriaPerPage);
 
@@ -138,8 +144,8 @@ describe("getCriteria", () => {
 
 	test("should return all criteria from a spreadsheet", () => {
 		const workbook = xlsx.readFile("test-data/rgaa-4-1-2/80-page-sheets.ods");
-
-		const criteria = getCriteria(workbook);
+		const parser = new Parser_4_1_2(workbook);
+		const criteria = parser.getCriteria();
 
 		expect(criteria.length).toEqual(20 * nbCriteriaPerPage);
 
