@@ -80,7 +80,7 @@ export function getCriteria(workbook: xlsx.WorkBook): Criterion[] {
 				"derogationComment",
 			],
 			defval: "",
-			range: 3 /* start at the 4th row */,
+			range: 3 /* skip header rows */,
 		});
 
 		// for each row, convert it to a Row object and add it to the rows array
