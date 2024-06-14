@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, test } from "@jest/globals";
 import * as xlsx from "xlsx";
-import { getMetadata, getPages } from "../src/parser-utils-4-1-2";
+import { getCriteria, getMetadata, getPages } from "../src/parser-utils-4-1-2";
 
 describe("getMetadata", () => {
 	test('should throw an error if the workbook does not contain the "Échantillon" sheet', () => {
@@ -77,5 +77,15 @@ describe("getPages", () => {
 				url: "http://www.site.fr/multiline-url.html",
 			},
 		]);
+	});
+});
+
+describe("getCriteria", () => {
+	test("should throw an error if a sheet is missing for a page", () => {
+		const workbook = xlsx.readFile("test-data/rgaa-4-1-2/05-missing-page.ods");
+
+		expect(() => getCriteria(workbook)).toThrowError(
+			'Missing sheet for page "P02" in the spreadsheet',
+		);
 	});
 });
