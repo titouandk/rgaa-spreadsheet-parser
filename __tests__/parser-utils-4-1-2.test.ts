@@ -2,6 +2,8 @@ import { beforeEach, describe, expect, test } from "@jest/globals";
 import * as xlsx from "xlsx";
 import { getCriteria, getMetadata, getPages } from "../src/parser-utils-4-1-2";
 
+const nbCriteriaPerPage = 106;
+
 describe("getMetadata", () => {
 	test('should throw an error if the workbook does not contain the "Échantillon" sheet', () => {
 		const workbook = xlsx.readFile(
@@ -95,9 +97,13 @@ describe("getCriteria", () => {
 		);
 
 		const criteria = getCriteria(workbook);
-		const nbCriteriaPerPage = 106;
-		const nbSheets = 3;
 
-		expect(criteria.length).toEqual(nbCriteriaPerPage * nbSheets);
+		expect(criteria.length).toEqual(nbCriteriaPerPage);
+
+		expect(criteria[0]?.topicId).toEqual(1);
+		expect(criteria[0]?.id).toEqual(1);
+
+		expect(criteria[nbCriteriaPerPage - 1]?.topicId).toEqual(13);
+		expect(criteria[nbCriteriaPerPage - 1]?.id).toEqual(12);
 	});
 });

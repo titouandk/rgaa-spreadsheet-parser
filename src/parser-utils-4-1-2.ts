@@ -68,7 +68,7 @@ export function getCriteria(workbook: xlsx.WorkBook): Criterion[] {
 		}
 
 		// convert the sheet to json
-		let rows = xlsx.utils.sheet_to_json<Row>(sheet, {
+		const rows = xlsx.utils.sheet_to_json<Row>(sheet, {
 			header: [
 				"topicTitle",
 				"criterionId",
@@ -79,10 +79,8 @@ export function getCriteria(workbook: xlsx.WorkBook): Criterion[] {
 				"derogationComment",
 			],
 			defval: "",
+			range: 3 /* start at the 4th row */,
 		});
-
-		// remove the header rows of the page
-		rows = rows.slice(3);
 
 		// for each row, convert it to a Row object and add it to the rows array
 		for (const row of rows) {
