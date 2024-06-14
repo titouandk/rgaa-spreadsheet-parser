@@ -88,14 +88,14 @@ export function getCriteria(workbook: xlsx.WorkBook): Criterion[] {
 			const topicId = Number.parseInt(row.criterionId.split(".")[0]);
 			if (Number.isNaN(topicId)) {
 				throw new Error(
-					`Invalid topic id "${topicId}" for row ${JSON.stringify(row)}`,
+					`Invalid topic id "${topicId}" for page "${page.id}" and row ${JSON.stringify(row)}`,
 				);
 			}
 
 			const criterionId = Number.parseInt(row.criterionId.split(".")[1]);
 			if (Number.isNaN(criterionId)) {
 				throw new Error(
-					`Invalid criterion id "${criterionId}" for row ${JSON.stringify(
+					`Invalid criterion id "${criterionId}" for page "${page.id}" and row ${JSON.stringify(
 						row,
 					)}`,
 				);
@@ -109,14 +109,14 @@ export function getCriteria(workbook: xlsx.WorkBook): Criterion[] {
 				criterionStatus !== "NA"
 			) {
 				throw new Error(
-					`Invalid status "${criterionStatus}" for row ${JSON.stringify(row)}`,
+					`Invalid status "${criterionStatus}" for page "${page.id}" and row ${JSON.stringify(row)}`,
 				);
 			}
 
 			const criterionDerogation = row.derogation.toUpperCase();
 			if (criterionDerogation !== "N" && criterionDerogation !== "D") {
 				throw new Error(
-					`Invalid derogation "${criterionDerogation}" for row ${JSON.stringify(
+					`Invalid derogation "${criterionDerogation}" for page "${page.id}" and row ${JSON.stringify(
 						row,
 					)}`,
 				);
