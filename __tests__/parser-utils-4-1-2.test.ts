@@ -1,26 +1,25 @@
 import { beforeEach, describe, expect, test } from "@jest/globals";
-import * as xlsx from "xlsx";
-import { Parser_4_1_2 } from "../src/parser";
+import { createParser } from "../src/parser";
 
 const nbCriteriaPerPage = 106;
 
 describe("getMetadata", () => {
-	test('should throw an error if the workbook does not contain the "Échantillon" sheet', () => {
-		const workbook = xlsx.readFile(
+	test('should throw an error if the workbook does not contain the "Échantillon" sheet', async () => {
+		const parser = await createParser(
+			"4.1.2",
 			"test-data/rgaa-4-1-2/10-echantillon-sheet-missing.ods",
 		);
-		const parser = new Parser_4_1_2(workbook);
 
 		expect(() => parser.getMetadata()).toThrowError(
 			'Missing "Échantillon" sheet in the workbook',
 		);
 	});
 
-	test("should return empty strings for missing metadata", () => {
-		const workbook = xlsx.readFile(
+	test("should return empty strings for missing metadata", async () => {
+		const parser = await createParser(
+			"4.1.2",
 			"test-data/rgaa-4-1-2/20-echantillon-sheet-missing-metadata.ods",
 		);
-		const parser = new Parser_4_1_2(workbook);
 		const metadata = parser.getMetadata();
 
 		expect(metadata).toEqual({
@@ -32,11 +31,11 @@ describe("getMetadata", () => {
 		});
 	});
 
-	test("should return the metadata from the workbook", () => {
-		const workbook = xlsx.readFile(
+	test("should return the metadata from the workbook", async () => {
+		const parser = await createParser(
+			"4.1.2",
 			"test-data/rgaa-4-1-2/30-echantillon-sheet-valid-metadata.ods",
 		);
-		const parser = new Parser_4_1_2(workbook);
 		const metadata = parser.getMetadata();
 
 		expect(metadata).toEqual({
@@ -50,11 +49,11 @@ describe("getMetadata", () => {
 });
 
 describe("getPages", () => {
-	test('should not be sensitive to empty header rows in the "Échantillon" sheet', () => {
-		const workbook = xlsx.readFile(
+	test('should not be sensitive to empty header rows in the "Échantillon" sheet', async () => {
+		const parser = await createParser(
+			"4.1.2",
 			"test-data/rgaa-4-1-2/40-echantillon-sheet-empty-header-rows.ods",
 		);
-		const parser = new Parser_4_1_2(workbook);
 		const pages = parser.getPages();
 
 		expect(pages).toEqual([
@@ -76,11 +75,11 @@ describe("getPages", () => {
 		]);
 	});
 
-	test("should return only the pages that have an id, and either a title or a URL", () => {
-		const workbook = xlsx.readFile(
+	test("should return only the pages that have an id, and either a title or a URL", async () => {
+		const parser = await createParser(
+			"4.1.2",
 			"test-data/rgaa-4-1-2/50-echantillon-sheet-page-list.ods",
 		);
-		const parser = new Parser_4_1_2(workbook);
 		const pages = parser.getPages();
 
 		expect(pages).toEqual([
@@ -115,22 +114,22 @@ describe("getPages", () => {
 });
 
 describe("getCriteria", () => {
-	test("should throw an error if a sheet is missing for a page", () => {
-		const workbook = xlsx.readFile(
+	test("should throw an error if a sheet is missing for a page", async () => {
+		const parser = await createParser(
+			"4.1.2",
 			"test-data/rgaa-4-1-2/60-page-sheet-missing.ods",
 		);
-		const parser = new Parser_4_1_2(workbook);
 
 		expect(() => parser.getCriteria()).toThrowError(
 			'Missing sheet for page "P02" in the spreadsheet',
 		);
 	});
 
-	test("should not be sensitive to empty header rows in a sheet", () => {
-		const workbook = xlsx.readFile(
+	test("should not be sensitive to empty header rows in a sheet", async () => {
+		const parser = await createParser(
+			"4.1.2",
 			"test-data/rgaa-4-1-2/70-page-sheet-empty-header-rows.ods",
 		);
-		const parser = new Parser_4_1_2(workbook);
 		const criteria = parser.getCriteria();
 
 		expect(criteria.length).toEqual(nbCriteriaPerPage);
@@ -142,9 +141,11 @@ describe("getCriteria", () => {
 		expect(criteria[nbCriteriaPerPage - 1]?.id).toEqual(12);
 	});
 
-	test("should return all criteria from a spreadsheet", () => {
-		const workbook = xlsx.readFile("test-data/rgaa-4-1-2/80-page-sheets.ods");
-		const parser = new Parser_4_1_2(workbook);
+	test("should return all criteria from a spreadsheet", async () => {
+		const parser = await createParser(
+			"4.1.2",
+			"test-data/rgaa-4-1-2/80-page-sheets.ods",
+		);
 		const criteria = parser.getCriteria();
 
 		expect(criteria.length).toEqual(20 * nbCriteriaPerPage);

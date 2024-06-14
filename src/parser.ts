@@ -1,8 +1,24 @@
-import type * as xlsx from "xlsx";
+import fs from "node:fs";
+import * as xlsx from "xlsx";
 import { getCriteria, getMetadata, getPages } from "./parser-utils-4-1-2";
 import type { Criterion, Metadata, Page } from "./types";
 
-export class Parser {
+export async function createParser(
+	spreadsheetRgaaVersion: string,
+	spreadsheetPath: string,
+): Promise<Parser> {
+	const file = await fs.promises.readFile(spreadsheetPath);
+	const workbook = xlsx.read(file);
+
+	switch (spreadsheetRgaaVersion) {
+		case "4.1.2":
+			return new Parser_4_1_2(workbook);
+		default:
+			throw new Error(`Unsupported RGAA version: ${spreadsheetRgaaVersion}`);
+	}
+}
+
+class Parser {
 	protected _workbook: xlsx.WorkBook;
 
 	constructor(workbook: xlsx.WorkBook) {
@@ -28,7 +44,7 @@ export class Parser {
 	}
 }
 
-export class Parser_4 extends Parser {
+class Parser_4 extends Parser {
 	getMetadata(): Metadata {
 		return getMetadata(this._workbook);
 	}
@@ -42,8 +58,8 @@ export class Parser_4 extends Parser {
 	}
 }
 
-export class Parser_4_1 extends Parser_4 {}
+class Parser_4_1 extends Parser_4 {}
 
-export class Parser_4_1_1 extends Parser_4_1 {}
+class Parser_4_1_1 extends Parser_4_1 {}
 
-export class Parser_4_1_2 extends Parser_4_1 {}
+class Parser_4_1_2 extends Parser_4_1 {}
