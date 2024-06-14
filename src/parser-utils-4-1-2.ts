@@ -21,10 +21,11 @@ export function getPages(workbook: xlsx.WorkBook): Page[] {
 	const rawContent = xlsx.utils.sheet_to_json<Page>(sampleSheet, {
 		header: ["id", "title", "url"],
 		defval: "",
+		range: 8 /* skip header rows */,
 	});
 
 	// remove the header rows of the sheet, and trim the values
-	const allPages = rawContent.slice(7).map((page) => {
+	const allPages = rawContent.map((page) => {
 		return {
 			id: page.id.trim(),
 			title: page.title.trim(),
