@@ -47,6 +47,29 @@ describe("getMetadata", () => {
 });
 
 describe("getPages", () => {
+	test('should not be sensitive to empty header rows in the "Échantillon" sheet', () => {
+		const workbook = xlsx.readFile("test-data/rgaa-4-1-2/tmp.ods");
+		const pages = getPages(workbook);
+
+		expect(pages).toEqual([
+			{
+				id: "P01",
+				title: "Accueil",
+				url: "http://www.site.fr/accueil.html",
+			},
+			{
+				id: "P02",
+				title: "Authentification",
+				url: "http://www.site.fr/authentification.html",
+			},
+			{
+				id: "P03",
+				title: "Contact",
+				url: "http://www.site.fr/contact.html",
+			},
+		]);
+	});
+
 	test("should return only the pages that have an id, and either a title or a URL", () => {
 		const workbook = xlsx.readFile("test-data/rgaa-4-1-2/04-pages.ods");
 		const pages = getPages(workbook);
