@@ -93,7 +93,7 @@ describe("getCriteria", () => {
 
 	test("should not be sensitive to empty header rows in a sheet", () => {
 		const workbook = xlsx.readFile(
-			"test-data/rgaa-4-1-2/06-missing-header.ods",
+			"test-data/rgaa-4-1-2/06-missing-page-header.ods",
 		);
 
 		const criteria = getCriteria(workbook);
