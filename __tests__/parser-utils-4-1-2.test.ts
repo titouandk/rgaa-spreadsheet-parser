@@ -155,6 +155,43 @@ describe("getCriteria", () => {
 				"P01, topic 1, criterion 1, derogation comment, line 1.\n\nP01, topic 1, criterion 1, derogation comment, line 3.",
 		});
 
+		expect(criteria[1]).toEqual({
+			pageId: "P01",
+			topicId: 1,
+			id: 2,
+			status: "NC",
+			correctionInstructions:
+				"P01, topic 1, criterion 2, correction instructions, line 1.\n\nP01, topic 1, criterion 2, correction instructions, line 3.",
+			derogation: "N",
+			derogationComment:
+				"P01, topic 1, criterion 2, derogation comment, line 1.\n\nP01, topic 1, criterion 2, derogation comment, line 3.",
+		});
+
+		expect(criteria[2]).toEqual({
+			pageId: "P01",
+			topicId: 1,
+			id: 3,
+			status: "NC",
+			correctionInstructions:
+				"P01, topic 1, criterion 3, correction instructions, line 1.\n\nP01, topic 1, criterion 3, correction instructions, line 3.",
+			derogation: "D",
+			derogationComment:
+				"P01, topic 1, criterion 3, derogation comment, line 1.\n\nP01, topic 1, criterion 3, derogation comment, line 3.",
+		});
+
+		// nt n
+		expect(criteria[3]).toEqual({
+			pageId: "P01",
+			topicId: 1,
+			id: 4,
+			status: "NT",
+			correctionInstructions:
+				"P01, topic 1, criterion 4, correction instructions, line 1.\n\nP01, topic 1, criterion 4, correction instructions, line 3.",
+			derogation: "N",
+			derogationComment:
+				"P01, topic 1, criterion 4, derogation comment, line 1.\n\nP01, topic 1, criterion 4, derogation comment, line 3.",
+		});
+
 		expect(criteria[nbCriteriaPerPage - 1]).toEqual({
 			pageId: "P01",
 			topicId: 13,
@@ -165,6 +202,29 @@ describe("getCriteria", () => {
 			derogation: "N",
 			derogationComment:
 				"P01, topic 13, criterion 12, derogation comment, line 1.\n\nP01, topic 13, criterion 12, derogation comment, line 3.",
+		});
+
+		expect(criteria[nbCriteriaPerPage * 19]).toEqual({
+			pageId: "P20",
+			topicId: 1,
+			id: 1,
+			status: "NT",
+			correctionInstructions:
+				"P20, topic 1, criterion 1, correction instructions, line 1.\n\nP20, topic 1, criterion 1, correction instructions, line 3.",
+			derogation: "N",
+			derogationComment:
+				"P20, topic 1, criterion 1, derogation comment, line 1.\n\nP20, topic 1, criterion 1, derogation comment, line 3.",
+		});
+
+		expect(criteria[nbCriteriaPerPage * 20 - 1]).toEqual({
+			pageId: "P20",
+			topicId: 13,
+			id: 12,
+			status: "NC",
+			correctionInstructions:
+				"P20, topic 13, criterion 12, correction instructions, line 1.\n\nP20, topic 13, criterion 12, correction instructions, line 3.",
+			derogation: "N",
+			derogationComment: "",
 		});
 	});
 });
