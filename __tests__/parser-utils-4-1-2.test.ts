@@ -88,4 +88,16 @@ describe("getCriteria", () => {
 			'Missing sheet for page "P02" in the spreadsheet',
 		);
 	});
+
+	test("should not be sensitive to empty header rows in a sheet", () => {
+		const workbook = xlsx.readFile(
+			"test-data/rgaa-4-1-2/06-missing-header.ods",
+		);
+
+		const criteria = getCriteria(workbook);
+		const nbCriteriaPerPage = 106;
+		const nbSheets = 3;
+
+		expect(criteria.length).toEqual(nbCriteriaPerPage * nbSheets);
+	});
 });
