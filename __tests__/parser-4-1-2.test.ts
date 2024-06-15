@@ -144,7 +144,7 @@ describe("getCriteria", () => {
 	test("should return all criteria from a spreadsheet", async () => {
 		const parser = await createParser(
 			"4.1.2",
-			"test-data/rgaa-4-1-2/080-page-sheets.ods",
+			"test-data/rgaa-4-1-2/080-valid-criteria.ods",
 		);
 		const criteria = parser.getCriteria();
 
