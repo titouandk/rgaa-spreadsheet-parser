@@ -24,7 +24,7 @@ export function getPages(workbook: xlsx.WorkBook): Page[] {
 		range: 8 /* skip header rows */,
 	});
 
-	// remove the header rows of the sheet, and trim the values
+	// trim the values
 	const allPages = rawContent.map((page) => {
 		return {
 			id: page.id.trim(),
