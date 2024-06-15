@@ -251,4 +251,15 @@ describe("getCriteria", () => {
 			'Invalid criterion status "X" at page "P01", criterion "1.4"',
 		);
 	});
+
+	test("should throw an error if the derogation flag of a criterion is invalid", async () => {
+		const parser = await createParser(
+			"4.1.2",
+			"test-data/rgaa-4-1-2/100-invalid-criterion-derogation-flag.ods",
+		);
+
+		expect(() => parser.getCriteria()).toThrowError(
+			'Invalid criterion derogation flag "X" at page "P01", criterion "1.4"',
+		);
+	});
 });
