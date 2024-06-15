@@ -186,7 +186,6 @@ describe("getCriteria", () => {
 				"P01, topic 1, criterion 3, derogation comment, line 1.\n\nP01, topic 1, criterion 3, derogation comment, line 3.",
 		});
 
-		// nt n
 		expect(criteria[3]).toEqual({
 			pageId: "P01",
 			topicId: 1,
