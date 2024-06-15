@@ -148,7 +148,14 @@ describe("getCriteria", () => {
 		);
 		const criteria = parser.getCriteria();
 
+		/*
+		 * Test if the number of criteria is correct
+		 */
 		expect(criteria.length).toEqual(20 * nbCriteriaPerPage);
+
+		/*
+		 * Test the values of some criteria
+		 */
 
 		expect(criteria[0]).toEqual({
 			pageId: "P01",
