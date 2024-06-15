@@ -240,4 +240,15 @@ describe("getCriteria", () => {
 			derogationComment: "",
 		});
 	});
+
+	test("should throw an error if the status of a criterion is invalid", async () => {
+		const parser = await createParser(
+			"4.1.2",
+			"test-data/rgaa-4-1-2/090-invalid-criterion-status.ods",
+		);
+
+		expect(() => parser.getCriteria()).toThrowError(
+			'Invalid criterion status "X" at page "P01", criterion "1.4"',
+		);
+	});
 });
