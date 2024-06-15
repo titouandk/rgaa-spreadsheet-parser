@@ -7,7 +7,7 @@ describe("getMetadata", () => {
 	test('should throw an error if the workbook does not contain the "Échantillon" sheet', async () => {
 		const parser = await createParser(
 			"4.1.2",
-			"test-data/rgaa-4-1-2/10-echantillon-sheet-missing.ods",
+			"test-data/rgaa-4-1-2/010-echantillon-sheet-missing.ods",
 		);
 
 		expect(() => parser.getMetadata()).toThrowError(
@@ -18,7 +18,7 @@ describe("getMetadata", () => {
 	test("should return empty strings for missing metadata", async () => {
 		const parser = await createParser(
 			"4.1.2",
-			"test-data/rgaa-4-1-2/20-echantillon-sheet-missing-metadata.ods",
+			"test-data/rgaa-4-1-2/020-echantillon-sheet-missing-metadata.ods",
 		);
 		const metadata = parser.getMetadata();
 
@@ -34,7 +34,7 @@ describe("getMetadata", () => {
 	test("should return the metadata from the workbook", async () => {
 		const parser = await createParser(
 			"4.1.2",
-			"test-data/rgaa-4-1-2/30-echantillon-sheet-valid-metadata.ods",
+			"test-data/rgaa-4-1-2/030-echantillon-sheet-valid-metadata.ods",
 		);
 		const metadata = parser.getMetadata();
 
@@ -52,7 +52,7 @@ describe("getPages", () => {
 	test('should not be sensitive to empty header rows in the "Échantillon" sheet', async () => {
 		const parser = await createParser(
 			"4.1.2",
-			"test-data/rgaa-4-1-2/40-echantillon-sheet-empty-header-rows.ods",
+			"test-data/rgaa-4-1-2/040-echantillon-sheet-empty-header-rows.ods",
 		);
 		const pages = parser.getPages();
 
@@ -78,7 +78,7 @@ describe("getPages", () => {
 	test("should return only the pages that have an id, and either a title or a URL", async () => {
 		const parser = await createParser(
 			"4.1.2",
-			"test-data/rgaa-4-1-2/50-echantillon-sheet-page-list.ods",
+			"test-data/rgaa-4-1-2/050-echantillon-sheet-page-list.ods",
 		);
 		const pages = parser.getPages();
 
@@ -117,7 +117,7 @@ describe("getCriteria", () => {
 	test("should throw an error if a sheet is missing for a page", async () => {
 		const parser = await createParser(
 			"4.1.2",
-			"test-data/rgaa-4-1-2/60-page-sheet-missing.ods",
+			"test-data/rgaa-4-1-2/060-page-sheet-missing.ods",
 		);
 
 		expect(() => parser.getCriteria()).toThrowError(
@@ -128,7 +128,7 @@ describe("getCriteria", () => {
 	test("should not be sensitive to empty header rows in a sheet", async () => {
 		const parser = await createParser(
 			"4.1.2",
-			"test-data/rgaa-4-1-2/70-page-sheet-empty-header-rows.ods",
+			"test-data/rgaa-4-1-2/070-page-sheet-empty-header-rows.ods",
 		);
 		const criteria = parser.getCriteria();
 
@@ -144,7 +144,7 @@ describe("getCriteria", () => {
 	test("should return all criteria from a spreadsheet", async () => {
 		const parser = await createParser(
 			"4.1.2",
-			"test-data/rgaa-4-1-2/80-page-sheets.ods",
+			"test-data/rgaa-4-1-2/080-page-sheets.ods",
 		);
 		const criteria = parser.getCriteria();
 
