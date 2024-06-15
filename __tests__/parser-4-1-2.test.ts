@@ -244,7 +244,7 @@ describe("getCriteria", () => {
 	test("should throw an error if the status of a criterion is invalid", async () => {
 		const parser = await createParser(
 			"4.1.2",
-			"test-data/rgaa-4-1-2/090-invalid-criterion-status.ods",
+			"test-data/rgaa-4-1-2/110-invalid-criterion-status.ods",
 		);
 
 		expect(() => parser.getCriteria()).toThrowError(
@@ -255,7 +255,7 @@ describe("getCriteria", () => {
 	test("should throw an error if the derogation flag of a criterion is invalid", async () => {
 		const parser = await createParser(
 			"4.1.2",
-			"test-data/rgaa-4-1-2/100-invalid-criterion-derogation-flag.ods",
+			"test-data/rgaa-4-1-2/120-invalid-criterion-derogation-flag.ods",
 		);
 
 		expect(() => parser.getCriteria()).toThrowError(
