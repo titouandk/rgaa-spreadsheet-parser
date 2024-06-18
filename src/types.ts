@@ -30,8 +30,10 @@ export interface Criterion {
 	id: number;
 	status: CriterionStatus;
 	correctionInstructions: string;
-	derogation: "N" | "D";
+	derogation: CriterionDerogation;
 	derogationComment: string;
 }
 
 export type CriterionStatus = "NT" | "C" | "NC" | "NA";
+
+export type CriterionDerogation = "N" | "D";

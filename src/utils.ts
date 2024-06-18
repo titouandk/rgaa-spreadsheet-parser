@@ -1,5 +1,5 @@
 import isString from "lodash/isString";
-import type { CriterionStatus } from "./types";
+import type { CriterionDerogation, CriterionStatus } from "./types";
 
 export function parseTopicId(value: unknown): number {
 	if (!isString(value)) {
@@ -63,4 +63,24 @@ export function isCriterionStatus(value: unknown): value is CriterionStatus {
 	return (
 		isString(value) && ["NT", "C", "NC", "NA"].includes(value.toUpperCase())
 	);
+}
+
+export function parseCriterionDerogation(value: unknown) {
+	if (!isString(value)) {
+		throw new Error("Criterion derogation should be a string");
+	}
+
+	const criterionDerogation = value.toUpperCase();
+
+	if (!isCriterionDerogation(criterionDerogation)) {
+		throw new Error(`Invalid criterion derogation "${criterionDerogation}"`);
+	}
+
+	return criterionDerogation;
+}
+
+export function isCriterionDerogation(
+	value: unknown,
+): value is CriterionDerogation {
+	return isString(value) && ["N", "D"].includes(value.toUpperCase());
 }

@@ -259,7 +259,7 @@ describe("getCriteria", () => {
 		);
 
 		expect(() => parser.getCriteria()).toThrowError(
-			'Invalid criterion derogation flag "X" at page "P01", criterion "1.4"',
+			'Invalid criterion derogation "X"',
 		);
 	});
 });
