@@ -6,7 +6,7 @@
 
 import * as xlsx from "xlsx";
 import type { Criterion, Metadata, Page } from "./types";
-import { parseCriterionId, parseTopicId } from "./utils";
+import { parseCriterionId, parseCriterionStatus, parseTopicId } from "./utils";
 
 /**
  * A function that extracts the list of pages that were part of the "Sample" sheet.
@@ -88,18 +88,7 @@ export function getCriteria(workbook: xlsx.WorkBook): Criterion[] {
 		for (const row of rows) {
 			const topicId = parseTopicId(row.criterionId);
 			const criterionId = parseCriterionId(row.criterionId);
-
-			const criterionStatus = row.status.toUpperCase();
-			if (
-				criterionStatus !== "NT" &&
-				criterionStatus !== "C" &&
-				criterionStatus !== "NC" &&
-				criterionStatus !== "NA"
-			) {
-				throw new Error(
-					`Invalid criterion status "${criterionStatus}" at page "${page.id}", criterion "${row.criterionId}"`,
-				);
-			}
+			const criterionStatus = parseCriterionStatus(row.status);
 
 			const criterionDerogation = row.derogation.toUpperCase();
 			if (criterionDerogation !== "N" && criterionDerogation !== "D") {

@@ -28,8 +28,10 @@ export interface Criterion {
 	pageId: string;
 	topicId: number;
 	id: number;
-	status: "NT" | "C" | "NC" | "NA";
+	status: CriterionStatus;
 	correctionInstructions: string;
 	derogation: "N" | "D";
 	derogationComment: string;
 }
+
+export type CriterionStatus = "NT" | "C" | "NC" | "NA";

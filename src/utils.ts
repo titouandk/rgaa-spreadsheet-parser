@@ -1,4 +1,5 @@
 import isString from "lodash/isString";
+import type { CriterionStatus } from "./types";
 
 export function parseTopicId(value: unknown): number {
 	if (!isString(value)) {
@@ -42,4 +43,24 @@ export function parseCriterionId(value: unknown) {
 	}
 
 	return parsedValueAsNumber;
+}
+
+export function parseCriterionStatus(value: unknown): CriterionStatus {
+	if (!isString(value)) {
+		throw new Error("Criterion status should be a string");
+	}
+
+	const criterionStatus = value.toUpperCase();
+
+	if (!isCriterionStatus(criterionStatus)) {
+		throw new Error(`Invalid criterion status "${criterionStatus}"`);
+	}
+
+	return criterionStatus;
+}
+
+export function isCriterionStatus(value: unknown): value is CriterionStatus {
+	return (
+		isString(value) && ["NT", "C", "NC", "NA"].includes(value.toUpperCase())
+	);
 }

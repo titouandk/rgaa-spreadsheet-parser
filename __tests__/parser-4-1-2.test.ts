@@ -248,7 +248,7 @@ describe("getCriteria", () => {
 		);
 
 		expect(() => parser.getCriteria()).toThrowError(
-			'Invalid criterion status "X" at page "P01", criterion "1.4"',
+			'Invalid criterion status "X"',
 		);
 	});
 
