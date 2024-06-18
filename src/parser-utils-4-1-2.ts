@@ -85,17 +85,17 @@ export function getCriteria(workbook: xlsx.WorkBook): Criterion[] {
 
 		// for each row, convert it to a Row object and add it to the rows array
 		for (const row of rows) {
-			const topicId = Number.parseInt(row.criterionId.split(".")[0]);
+			const topicId = Number.parseInt(row.criterionId.toString().split(".")[0]);
 			if (Number.isNaN(topicId)) {
-				throw new Error(
-					`Invalid topic id "${topicId}" at page "${page.id}", criterion "${row.criterionId}"`,
-				);
+				throw new Error(`Invalid topic id "${topicId}" at page "${page.id}"`);
 			}
 
-			const criterionId = Number.parseInt(row.criterionId.split(".")[1]);
+			const criterionId = Number.parseInt(
+				row.criterionId.toString().split(".")[1],
+			);
 			if (Number.isNaN(criterionId)) {
 				throw new Error(
-					`Invalid criterion id "${criterionId}" at page "${page.id}", criterion "${row.criterionId}"`,
+					`Invalid criterion id "${criterionId}" at page "${page.id}", topic "${topicId}"`,
 				);
 			}
 
