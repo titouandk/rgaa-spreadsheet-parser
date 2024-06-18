@@ -1,12 +1,10 @@
 import isString from "lodash/isString";
 
 export function parseTopicId(value: unknown): number {
-	if (Number.isFinite(value)) {
-		value = (value as number).toString();
-	}
-
 	if (!isString(value)) {
-		throw new Error("Invalid topic id");
+		throw new Error(
+			'Topic id should be contained in a string formated as "topicX.criterionY"',
+		);
 	}
 
 	/* For the moment, TypeScript forgets that the type of a variable
@@ -14,12 +12,12 @@ export function parseTopicId(value: unknown): number {
 	 * We create duplicates of the variables each time the type changes.
 	 * https://github.com/microsoft/TypeScript/issues/27706
 	 */
-	const valueAsString = value.split(".")[0];
-	const valueAsNumber = Number.parseInt(valueAsString);
+	const parsedValueAsString = value.split(".")[0];
+	const parsedValueAsNumber = Number.parseInt(parsedValueAsString);
 
-	if (!Number.isFinite(valueAsNumber)) {
-		throw new Error(`Cannot parse topic id from value "${value}"`);
+	if (!Number.isInteger(parsedValueAsNumber)) {
+		throw new Error(`Cannot parse topic id from string "${value}"`);
 	}
 
-	return valueAsNumber;
+	return parsedValueAsNumber;
 }
