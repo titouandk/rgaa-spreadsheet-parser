@@ -10,6 +10,7 @@ import {
 	parseCriterionDerogation,
 	parseCriterionId,
 	parseCriterionStatus,
+	parseString,
 	parseTopicId,
 } from "./utils";
 
@@ -47,14 +48,14 @@ export function getPages(workbook: xlsx.WorkBook): Page[] {
 	return validPages;
 }
 
-type Row = {
-	topicTitle: string;
-	criterionId: string;
-	criterionTitle: string;
-	status: string;
-	correctionInstructions: string;
-	derogation: string;
-	derogationComment: string;
+type CriteriaRow = {
+	topicTitle: unknown;
+	criterionId: unknown;
+	criterionTitle: unknown;
+	status: unknown;
+	correctionInstructions: unknown;
+	derogation: unknown;
+	derogationComment: unknown;
 };
 
 /**
@@ -74,8 +75,7 @@ export function getCriteria(workbook: xlsx.WorkBook): Criterion[] {
 			throw new Error(`Missing sheet for page "${page.id}" in the spreadsheet`);
 		}
 
-		// convert the sheet to json
-		const rows = xlsx.utils.sheet_to_json<Row>(sheet, {
+		const rows = xlsx.utils.sheet_to_json<CriteriaRow>(sheet, {
 			header: [
 				"topicTitle",
 				"criterionId",
@@ -89,21 +89,22 @@ export function getCriteria(workbook: xlsx.WorkBook): Criterion[] {
 			range: 3 /* skip header rows */,
 		});
 
-		// for each row, convert it to a Row object and add it to the rows array
 		for (const row of rows) {
 			const topicId = parseTopicId(row.criterionId);
 			const criterionId = parseCriterionId(row.criterionId);
 			const criterionStatus = parseCriterionStatus(row.status);
+			const correctionInstructions = parseString(row.correctionInstructions);
 			const criterionDerogation = parseCriterionDerogation(row.derogation);
+			const derogationComment = parseString(row.derogationComment);
 
 			criteria.push({
 				pageId: page.id,
 				topicId: topicId,
 				id: criterionId,
 				status: criterionStatus,
-				correctionInstructions: row.correctionInstructions,
+				correctionInstructions: correctionInstructions,
 				derogation: criterionDerogation,
-				derogationComment: row.derogationComment,
+				derogationComment: derogationComment,
 			});
 		}
 	}

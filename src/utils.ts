@@ -84,3 +84,11 @@ export function isCriterionDerogation(
 ): value is CriterionDerogation {
 	return isString(value) && ["N", "D"].includes(value.toUpperCase());
 }
+
+export function parseString(value: unknown): string {
+	if (!isString(value)) {
+		throw new Error("Value should be a string");
+	}
+
+	return value;
+}
