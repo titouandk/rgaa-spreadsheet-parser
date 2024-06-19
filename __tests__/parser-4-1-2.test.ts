@@ -252,6 +252,18 @@ describe("getCriteria", () => {
 		);
 	});
 
+	test("should throw an error if a criterion id is invalid", async () => {
+		// 100-invalid-criterion-id-number.ods
+		const parser = await createParser(
+			"4.1.2",
+			"test-data/rgaa-4-1-2/100-invalid-criterion-id-number.ods",
+		);
+
+		expect(() => parser.getCriteria()).toThrowError(
+			'Cannot parse criterion id from string "1.A"',
+		);
+	});
+
 	test("should throw an error if the status of a criterion is invalid", async () => {
 		const parser = await createParser(
 			"4.1.2",
