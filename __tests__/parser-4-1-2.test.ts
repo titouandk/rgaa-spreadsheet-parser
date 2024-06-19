@@ -241,6 +241,17 @@ describe("getCriteria", () => {
 		});
 	});
 
+	test("should throw an error if a topic id is invalid", async () => {
+		const parser = await createParser(
+			"4.1.2",
+			"test-data/rgaa-4-1-2/090-invalid-topic-id-number.ods",
+		);
+
+		expect(() => parser.getCriteria()).toThrowError(
+			'Topic id should be contained in a string formated as "topicX.criterionY"',
+		);
+	});
+
 	test("should throw an error if the status of a criterion is invalid", async () => {
 		const parser = await createParser(
 			"4.1.2",
