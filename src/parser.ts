@@ -1,7 +1,22 @@
 import fs from "node:fs";
 import * as xlsx from "xlsx";
 import { getCriteria, getMetadata, getPages } from "./parser-utils-4-1-2";
-import type { Criterion, Metadata, Page } from "./types";
+import type { Audit, Criterion, Metadata, Page } from "./types";
+
+export async function parse({
+	spreadsheetRgaaVersion,
+	spreadsheetPath,
+}: {
+	spreadsheetRgaaVersion: string;
+	spreadsheetPath: string;
+}): Promise<Audit> {
+	const parser = await createParser(spreadsheetRgaaVersion, spreadsheetPath);
+	return {
+		metadata: parser.getMetadata(),
+		pages: parser.getPages(),
+		criteria: parser.getCriteria(),
+	};
+}
 
 export async function createParser(
 	spreadsheetRgaaVersion: string,
