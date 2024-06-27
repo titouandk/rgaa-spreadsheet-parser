@@ -8,13 +8,13 @@ import type { Audit, Criterion, Metadata, Page } from "./types";
  * It returns an object containing all the data extracted from the spreadsheet.
  */
 export async function parseRgaaSpreadsheet({
-	spreadsheetRgaaVersion,
-	spreadsheetPath,
+	rgaaVersion,
+	filepath,
 }: {
-	spreadsheetRgaaVersion: string;
-	spreadsheetPath: string;
+	rgaaVersion: string;
+	filepath: string;
 }): Promise<Audit> {
-	const parser = await createParser(spreadsheetRgaaVersion, spreadsheetPath);
+	const parser = await createParser(rgaaVersion, filepath);
 	return {
 		metadata: parser.getMetadata(),
 		pages: parser.getPages(),
