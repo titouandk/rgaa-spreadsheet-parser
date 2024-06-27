@@ -2,6 +2,10 @@
 
 A NodeJS library to parse RGAA audit spreadsheets.
 
+## Disclaimer
+
+**Do not use this library on untrusted audit spreadsheets!**
+
 ## Installation
 
 ```bash
