@@ -1,5 +1,5 @@
 /**
- * All data extracted from the audit spreadsheet.
+ * All data extracted from an audit spreadsheet.
  */
 export interface Audit {
 	metadata: Metadata;
