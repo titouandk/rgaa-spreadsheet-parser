@@ -7,7 +7,7 @@ import type { Audit, Criterion, Metadata, Page } from "./types";
  * This function parses the RGAA audit spreadsheet.
  * It returns an object containing all the data extracted from the spreadsheet.
  */
-export async function parse({
+export async function parseRgaaSpreadsheet({
 	spreadsheetRgaaVersion,
 	spreadsheetPath,
 }: {
