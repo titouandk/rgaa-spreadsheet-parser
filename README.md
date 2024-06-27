@@ -20,6 +20,8 @@ npm install rgaa-spreadsheet-parser
 
 ## Development
 
+Inside the project directory, run:
+
 ```bash
 npm install
 npm run build
