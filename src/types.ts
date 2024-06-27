@@ -1,4 +1,13 @@
 /**
+ * All data extracted from the audit spreadsheet.
+ */
+export interface Audit {
+	metadata: Metadata;
+	pages: Page[];
+	criteria: Criterion[];
+}
+
+/**
  * Metadata of an audit.
  */
 export interface Metadata {
