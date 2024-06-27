@@ -3,6 +3,10 @@ import * as xlsx from "xlsx";
 import { getCriteria, getMetadata, getPages } from "./parser-utils-4-1-2";
 import type { Audit, Criterion, Metadata, Page } from "./types";
 
+/**
+ * This function parses the RGAA audit spreadsheet.
+ * It returns an object containing all the data extracted from the spreadsheet.
+ */
 export async function parse({
 	spreadsheetRgaaVersion,
 	spreadsheetPath,
