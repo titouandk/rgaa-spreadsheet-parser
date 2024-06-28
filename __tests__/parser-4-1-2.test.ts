@@ -5,14 +5,12 @@ const nbCriteriaPerPage = 106;
 
 describe("getMetadata", () => {
 	test('should throw an error if the workbook does not contain the "Échantillon" sheet', async () => {
-		const parser = await createParser(
-			"4.1.2",
-			"test-data/rgaa-4-1-2/010-echantillon-sheet-missing.ods",
-		);
-
-		expect(() => parser.getMetadata()).toThrowError(
-			'Missing "Échantillon" sheet in the workbook',
-		);
+		expect(async () => {
+			const audit = await parseRgaaSpreadsheet({
+				rgaaVersion: "4.1.2",
+				filepath: "test-data/rgaa-4-1-2/010-echantillon-sheet-missing.ods",
+			});
+		}).rejects.toThrowError('Missing "Échantillon" sheet in the workbook');
 	});
 
 	test("should return empty strings for missing metadata", async () => {
