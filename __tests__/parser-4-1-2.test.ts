@@ -47,13 +47,13 @@ describe("getMetadata", () => {
 
 describe("getPages", () => {
 	test('should not be sensitive to empty header rows in the "Échantillon" sheet', async () => {
-		const parser = await createParser(
-			"4.1.2",
-			"test-data/rgaa-4-1-2/040-echantillon-sheet-empty-header-rows.ods",
-		);
-		const pages = parser.getPages();
+		const audit = await parseRgaaSpreadsheet({
+			rgaaVersion: "4.1.2",
+			filepath:
+				"test-data/rgaa-4-1-2/040-echantillon-sheet-empty-header-rows.ods",
+		});
 
-		expect(pages).toEqual([
+		expect(audit.pages).toEqual([
 			{
 				id: "P01",
 				title: "Accueil",
