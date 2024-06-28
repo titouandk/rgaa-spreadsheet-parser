@@ -30,13 +30,12 @@ describe("getMetadata", () => {
 	});
 
 	test("should return the metadata from the workbook", async () => {
-		const parser = await createParser(
-			"4.1.2",
-			"test-data/rgaa-4-1-2/030-echantillon-sheet-valid-metadata.ods",
-		);
-		const metadata = parser.getMetadata();
+		const audit = await parseRgaaSpreadsheet({
+			rgaaVersion: "4.1.2",
+			filepath: "test-data/rgaa-4-1-2/030-echantillon-sheet-valid-metadata.ods",
+		});
 
-		expect(metadata).toEqual({
+		expect(audit.metadata).toEqual({
 			rgaaVersion: "4.1.1" /* error in the official RGAA 4.1.2 spreadsheet */,
 			auditor: "DUPONT Jean",
 			date: "01/06/2024",
