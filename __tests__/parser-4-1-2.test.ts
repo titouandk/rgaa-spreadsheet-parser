@@ -73,13 +73,12 @@ describe("getPages", () => {
 	});
 
 	test("should return only the pages that have an id, and either a title or a URL", async () => {
-		const parser = await createParser(
-			"4.1.2",
-			"test-data/rgaa-4-1-2/050-echantillon-sheet-page-list.ods",
-		);
-		const pages = parser.getPages();
+		const audit = await parseRgaaSpreadsheet({
+			rgaaVersion: "4.1.2",
+			filepath: "test-data/rgaa-4-1-2/050-echantillon-sheet-page-list.ods",
+		});
 
-		expect(pages).toEqual([
+		expect(audit.pages).toEqual([
 			{
 				id: "P01",
 				title: "Accueil",
