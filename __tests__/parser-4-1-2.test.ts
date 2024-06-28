@@ -14,13 +14,13 @@ describe("getMetadata", () => {
 	});
 
 	test("should return empty strings for missing metadata", async () => {
-		const parser = await createParser(
-			"4.1.2",
-			"test-data/rgaa-4-1-2/020-echantillon-sheet-missing-metadata.ods",
-		);
-		const metadata = parser.getMetadata();
+		const audit = await parseRgaaSpreadsheet({
+			rgaaVersion: "4.1.2",
+			filepath:
+				"test-data/rgaa-4-1-2/020-echantillon-sheet-missing-metadata.ods",
+		});
 
-		expect(metadata).toEqual({
+		expect(audit.metadata).toEqual({
 			rgaaVersion: "",
 			auditor: "",
 			date: "",
