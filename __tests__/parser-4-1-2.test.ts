@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from "@jest/globals";
-import { createParser } from "../src/parser";
+import { createParser, parseRgaaSpreadsheet } from "../src/parser";
 
 const nbCriteriaPerPage = 106;
 
