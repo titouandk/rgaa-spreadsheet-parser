@@ -22,7 +22,7 @@ export async function parseRgaaSpreadsheet({
 	};
 }
 
-export async function createParser(
+async function createParser(
 	spreadsheetRgaaVersion: string,
 	spreadsheetPath: string,
 ): Promise<Parser> {
