@@ -111,14 +111,12 @@ describe("getPages", () => {
 
 describe("getCriteria", () => {
 	test("should throw an error if a sheet is missing for a page", async () => {
-		const parser = await createParser(
-			"4.1.2",
-			"test-data/rgaa-4-1-2/060-page-sheet-missing.ods",
-		);
-
-		expect(() => parser.getCriteria()).toThrowError(
-			'Missing sheet for page "P02" in the spreadsheet',
-		);
+		expect(async () => {
+			const audit = await parseRgaaSpreadsheet({
+				rgaaVersion: "4.1.2",
+				filepath: "test-data/rgaa-4-1-2/060-page-sheet-missing.ods",
+			});
+		}).rejects.toThrowError('Missing sheet for page "P02" in the spreadsheet');
 	});
 
 	test("should not be sensitive to empty header rows in a sheet", async () => {
