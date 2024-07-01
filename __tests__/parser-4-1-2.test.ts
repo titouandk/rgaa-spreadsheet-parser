@@ -236,12 +236,12 @@ describe("getCriteria", () => {
 	});
 
 	test("should throw an error if a topic id is invalid", async () => {
-		const parser = await createParser(
-			"4.1.2",
-			"test-data/rgaa-4-1-2/090-invalid-topic-id-number.ods",
-		);
-
-		expect(() => parser.getCriteria()).toThrowError(
+		expect(async () => {
+			const audit = await parseRgaaSpreadsheet({
+				rgaaVersion: "4.1.2",
+				filepath: "test-data/rgaa-4-1-2/090-invalid-topic-id-number.ods",
+			});
+		}).rejects.toThrowError(
 			'Topic id should be contained in a string formated as "topicX.criterionY"',
 		);
 	});
