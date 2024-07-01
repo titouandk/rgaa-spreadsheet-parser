@@ -265,13 +265,12 @@ describe("getCriteria", () => {
 	});
 
 	test("should throw an error if the derogation flag of a criterion is invalid", async () => {
-		const parser = await createParser(
-			"4.1.2",
-			"test-data/rgaa-4-1-2/120-invalid-criterion-derogation-flag.ods",
-		);
-
-		expect(() => parser.getCriteria()).toThrowError(
-			'Invalid criterion derogation "X"',
-		);
+		expect(async () => {
+			const audit = await parseRgaaSpreadsheet({
+				rgaaVersion: "4.1.2",
+				filepath:
+					"test-data/rgaa-4-1-2/120-invalid-criterion-derogation-flag.ods",
+			});
+		}).rejects.toThrowError('Invalid criterion derogation "X"');
 	});
 });
