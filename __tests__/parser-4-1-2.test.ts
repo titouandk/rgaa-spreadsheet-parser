@@ -256,14 +256,12 @@ describe("getCriteria", () => {
 	});
 
 	test("should throw an error if the status of a criterion is invalid", async () => {
-		const parser = await createParser(
-			"4.1.2",
-			"test-data/rgaa-4-1-2/110-invalid-criterion-status.ods",
-		);
-
-		expect(() => parser.getCriteria()).toThrowError(
-			'Invalid criterion status "X"',
-		);
+		expect(async () => {
+			const audit = await parseRgaaSpreadsheet({
+				rgaaVersion: "4.1.2",
+				filepath: "test-data/rgaa-4-1-2/110-invalid-criterion-status.ods",
+			});
+		}).rejects.toThrowError('Invalid criterion status "X"');
 	});
 
 	test("should throw an error if the derogation flag of a criterion is invalid", async () => {
