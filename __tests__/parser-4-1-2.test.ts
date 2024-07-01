@@ -120,19 +120,18 @@ describe("getCriteria", () => {
 	});
 
 	test("should not be sensitive to empty header rows in a sheet", async () => {
-		const parser = await createParser(
-			"4.1.2",
-			"test-data/rgaa-4-1-2/070-page-sheet-empty-header-rows.ods",
-		);
-		const criteria = parser.getCriteria();
+		const audit = await parseRgaaSpreadsheet({
+			rgaaVersion: "4.1.2",
+			filepath: "test-data/rgaa-4-1-2/070-page-sheet-empty-header-rows.ods",
+		});
 
-		expect(criteria.length).toEqual(nbCriteriaPerPage);
+		expect(audit.criteria.length).toEqual(nbCriteriaPerPage);
 
-		expect(criteria[0]?.topicId).toEqual(1);
-		expect(criteria[0]?.id).toEqual(1);
+		expect(audit.criteria[0]?.topicId).toEqual(1);
+		expect(audit.criteria[0]?.id).toEqual(1);
 
-		expect(criteria[nbCriteriaPerPage - 1]?.topicId).toEqual(13);
-		expect(criteria[nbCriteriaPerPage - 1]?.id).toEqual(12);
+		expect(audit.criteria[nbCriteriaPerPage - 1]?.topicId).toEqual(13);
+		expect(audit.criteria[nbCriteriaPerPage - 1]?.id).toEqual(12);
 	});
 
 	test("should return all criteria from a spreadsheet", async () => {
