@@ -135,11 +135,12 @@ describe("getCriteria", () => {
 	});
 
 	test("should return all criteria from a spreadsheet", async () => {
-		const parser = await createParser(
-			"4.1.2",
-			"test-data/rgaa-4-1-2/080-valid-criteria.ods",
-		);
-		const criteria = parser.getCriteria();
+		const audit = await parseRgaaSpreadsheet({
+			rgaaVersion: "4.1.2",
+			filepath: "test-data/rgaa-4-1-2/080-valid-criteria.ods",
+		});
+
+		const criteria = audit.criteria;
 
 		/*
 		 * Test if the number of criteria is correct
