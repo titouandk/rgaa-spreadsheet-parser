@@ -8,7 +8,8 @@ describe("getMetadata", () => {
 		expect(async () => {
 			const audit = await parseRgaaSpreadsheet({
 				rgaaVersion: "4.1.2",
-				filepath: "test-data/rgaa-4-1-2/010-echantillon-sheet-missing.ods",
+				spreadsheetPath:
+					"test-data/rgaa-4-1-2/010-echantillon-sheet-missing.ods",
 			});
 		}).rejects.toThrowError('Missing "Échantillon" sheet in the workbook');
 	});
@@ -16,7 +17,7 @@ describe("getMetadata", () => {
 	test("should return empty strings for missing metadata", async () => {
 		const audit = await parseRgaaSpreadsheet({
 			rgaaVersion: "4.1.2",
-			filepath:
+			spreadsheetPath:
 				"test-data/rgaa-4-1-2/020-echantillon-sheet-missing-metadata.ods",
 		});
 
@@ -32,7 +33,8 @@ describe("getMetadata", () => {
 	test("should return the metadata from the workbook", async () => {
 		const audit = await parseRgaaSpreadsheet({
 			rgaaVersion: "4.1.2",
-			filepath: "test-data/rgaa-4-1-2/030-echantillon-sheet-valid-metadata.ods",
+			spreadsheetPath:
+				"test-data/rgaa-4-1-2/030-echantillon-sheet-valid-metadata.ods",
 		});
 
 		expect(audit.metadata).toEqual({
@@ -49,7 +51,7 @@ describe("getPages", () => {
 	test('should not be sensitive to empty header rows in the "Échantillon" sheet', async () => {
 		const audit = await parseRgaaSpreadsheet({
 			rgaaVersion: "4.1.2",
-			filepath:
+			spreadsheetPath:
 				"test-data/rgaa-4-1-2/040-echantillon-sheet-empty-header-rows.ods",
 		});
 
@@ -75,7 +77,8 @@ describe("getPages", () => {
 	test("should return only the pages that have an id, and either a title or a URL", async () => {
 		const audit = await parseRgaaSpreadsheet({
 			rgaaVersion: "4.1.2",
-			filepath: "test-data/rgaa-4-1-2/050-echantillon-sheet-page-list.ods",
+			spreadsheetPath:
+				"test-data/rgaa-4-1-2/050-echantillon-sheet-page-list.ods",
 		});
 
 		expect(audit.pages).toEqual([
@@ -114,7 +117,7 @@ describe("getCriteria", () => {
 		expect(async () => {
 			const audit = await parseRgaaSpreadsheet({
 				rgaaVersion: "4.1.2",
-				filepath: "test-data/rgaa-4-1-2/060-page-sheet-missing.ods",
+				spreadsheetPath: "test-data/rgaa-4-1-2/060-page-sheet-missing.ods",
 			});
 		}).rejects.toThrowError('Missing sheet for page "P02" in the spreadsheet');
 	});
@@ -122,7 +125,8 @@ describe("getCriteria", () => {
 	test("should not be sensitive to empty header rows in a sheet", async () => {
 		const audit = await parseRgaaSpreadsheet({
 			rgaaVersion: "4.1.2",
-			filepath: "test-data/rgaa-4-1-2/070-page-sheet-empty-header-rows.ods",
+			spreadsheetPath:
+				"test-data/rgaa-4-1-2/070-page-sheet-empty-header-rows.ods",
 		});
 
 		expect(audit.criteria.length).toEqual(nbCriteriaPerPage);
@@ -137,7 +141,7 @@ describe("getCriteria", () => {
 	test("should return all criteria from a spreadsheet", async () => {
 		const audit = await parseRgaaSpreadsheet({
 			rgaaVersion: "4.1.2",
-			filepath: "test-data/rgaa-4-1-2/080-valid-criteria.ods",
+			spreadsheetPath: "test-data/rgaa-4-1-2/080-valid-criteria.ods",
 		});
 
 		const criteria = audit.criteria;
@@ -239,7 +243,7 @@ describe("getCriteria", () => {
 		expect(async () => {
 			const audit = await parseRgaaSpreadsheet({
 				rgaaVersion: "4.1.2",
-				filepath: "test-data/rgaa-4-1-2/090-invalid-topic-id-number.ods",
+				spreadsheetPath: "test-data/rgaa-4-1-2/090-invalid-topic-id-number.ods",
 			});
 		}).rejects.toThrowError(
 			'Topic id should be contained in a string formated as "topicX.criterionY"',
@@ -250,7 +254,8 @@ describe("getCriteria", () => {
 		expect(async () => {
 			const audit = await parseRgaaSpreadsheet({
 				rgaaVersion: "4.1.2",
-				filepath: "test-data/rgaa-4-1-2/100-invalid-criterion-id-number.ods",
+				spreadsheetPath:
+					"test-data/rgaa-4-1-2/100-invalid-criterion-id-number.ods",
 			});
 		}).rejects.toThrowError('Cannot parse criterion id from string "1.A"');
 	});
@@ -259,7 +264,8 @@ describe("getCriteria", () => {
 		expect(async () => {
 			const audit = await parseRgaaSpreadsheet({
 				rgaaVersion: "4.1.2",
-				filepath: "test-data/rgaa-4-1-2/110-invalid-criterion-status.ods",
+				spreadsheetPath:
+					"test-data/rgaa-4-1-2/110-invalid-criterion-status.ods",
 			});
 		}).rejects.toThrowError('Invalid criterion status "X"');
 	});
@@ -268,7 +274,7 @@ describe("getCriteria", () => {
 		expect(async () => {
 			const audit = await parseRgaaSpreadsheet({
 				rgaaVersion: "4.1.2",
-				filepath:
+				spreadsheetPath:
 					"test-data/rgaa-4-1-2/120-invalid-criterion-derogation-flag.ods",
 			});
 		}).rejects.toThrowError('Invalid criterion derogation "X"');
