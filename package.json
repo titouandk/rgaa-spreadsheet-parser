@@ -41,7 +41,7 @@
     "lodash": "^4.17.21",
     "xlsx": "file:./vendor/xlsx-0.20.2.tgz"
   },
-  "bundledDependencies": [
+  "bundleDependencies": [
     "xlsx"
   ]
 }
