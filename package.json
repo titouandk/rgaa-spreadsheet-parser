@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "A NodeJS library to parse RGAA audit spreadsheets.",
   "main": "dist/parser.js",
+  "types": "dist/parser.d.ts",
   "devDependencies": {
     "@biomejs/biome": "1.8.0",
     "@jest/globals": "^29.7.0",
