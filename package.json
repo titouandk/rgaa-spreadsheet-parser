@@ -1,6 +1,6 @@
 {
   "name": "rgaa-spreadsheet-parser",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A NodeJS library to parse RGAA audit spreadsheets.",
   "main": "dist/parser.js",
   "types": "dist/parser.d.ts",
